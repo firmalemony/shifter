@@ -13,9 +13,9 @@ class Game {
         this.score = 0;
         this.speed = 2;
         
-        // JSONBin.io API - pro localhost použijte demo hodnoty, pro Vercel environment variables
-        this.apiKey = 'demo-key'; // Pro localhost - nahraďte skutečným klíčem pro testování
-        this.binId = 'demo-bin-id'; // Pro localhost - nahraďte skutečným Bin ID pro testování
+        // JSONBin.io API - skutečné klíče pro fungující žebříček
+        this.apiKey = '$2a$10$WrMBljUhANFS39i2XwHfH.9.V8AkViUkOp81Bn51ouKwvbmzG2M7m';
+        this.binId = '68de3f24ae596e708f0352a3';
         this.leaderboard = [];
         
         // Hráč
@@ -23,9 +23,9 @@ class Game {
         
         // Padající tvary
         this.collectibles = [];
-        this.shapeSpeed = 1.5; // Rychlejší padání
+        this.shapeSpeed = 0.5; // Velmi pomalé padání
         this.shapeSpawnTimer = 0;
-        this.shapeSpawnInterval = 120; // frames - kratší interval mezi tvary
+        this.shapeSpawnInterval = 200; // frames - delší interval mezi tvary
         
         // Ovládání
         this.keys = {};
@@ -85,12 +85,15 @@ class Game {
                 }
             }
         });
+        
+        // Mobilní ovládání
+        this.setupMobileControls();
     }
     
     startGame() {
         this.gameState = 'playing';
         this.score = 0;
-        this.shapeSpeed = 1.5; // Začínáme rychleji
+        this.shapeSpeed = 0.5; // Začínáme velmi pomalu
         this.collectibles = [];
         this.shapeSpawnTimer = 0;
         this.player.reset();
@@ -136,10 +139,10 @@ class Game {
             }
         }
         
-        // Zvyšování obtížnosti - postupné zrychlování
-        if (this.score > 0 && this.score % 3 === 0) {
-            this.shapeSpeed = Math.min(this.shapeSpeed + 0.1, 4.0);
-            this.shapeSpawnInterval = Math.max(this.shapeSpawnInterval - 2, 80);
+        // Zvyšování obtížnosti - velmi pomalé zrychlování
+        if (this.score > 0 && this.score % 5 === 0) {
+            this.shapeSpeed = Math.min(this.shapeSpeed + 0.02, 1.5);
+            this.shapeSpawnInterval = Math.max(this.shapeSpawnInterval - 1, 150);
         }
     }
     
@@ -218,7 +221,7 @@ class Game {
         this.ctx.fillText('Stiskni SPACE pro start', this.width / 2, this.height / 2 + 20);
         
         this.ctx.font = '18px Courier New';
-        this.ctx.fillText('WASD nebo šipky = pohyb | A = barva | S = tvar', this.width / 2, this.height / 2 + 60);
+        this.ctx.fillText('Šipky = pohyb | A = barva | S = tvar', this.width / 2, this.height / 2 + 60);
     }
     
     // JSONBin.io API funkce
@@ -349,6 +352,131 @@ class Game {
             });
         }
     }
+    
+    setupMobileControls() {
+        // D-pad ovládání
+        document.getElementById('upBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['arrowup'] = true;
+        });
+        
+        document.getElementById('upBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['arrowup'] = false;
+        });
+        
+        document.getElementById('downBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['arrowdown'] = true;
+        });
+        
+        document.getElementById('downBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['arrowdown'] = false;
+        });
+        
+        document.getElementById('leftBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['arrowleft'] = true;
+        });
+        
+        document.getElementById('leftBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['arrowleft'] = false;
+        });
+        
+        document.getElementById('rightBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['arrowright'] = true;
+        });
+        
+        document.getElementById('rightBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['arrowright'] = false;
+        });
+        
+        // Akční tlačítka
+        document.getElementById('colorBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['a'] = true;
+        });
+        
+        document.getElementById('colorBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['a'] = false;
+        });
+        
+        document.getElementById('shapeBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.keys['s'] = true;
+        });
+        
+        document.getElementById('shapeBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.keys['s'] = false;
+        });
+        
+        // Mouse events pro desktop testování
+        document.getElementById('upBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['arrowup'] = true;
+        });
+        
+        document.getElementById('upBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['arrowup'] = false;
+        });
+        
+        document.getElementById('downBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['arrowdown'] = true;
+        });
+        
+        document.getElementById('downBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['arrowdown'] = false;
+        });
+        
+        document.getElementById('leftBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['arrowleft'] = true;
+        });
+        
+        document.getElementById('leftBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['arrowleft'] = false;
+        });
+        
+        document.getElementById('rightBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['arrowright'] = true;
+        });
+        
+        document.getElementById('rightBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['arrowright'] = false;
+        });
+        
+        document.getElementById('colorBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['a'] = true;
+        });
+        
+        document.getElementById('colorBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['a'] = false;
+        });
+        
+        document.getElementById('shapeBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.keys['s'] = true;
+        });
+        
+        document.getElementById('shapeBtn').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            this.keys['s'] = false;
+        });
+    }
 }
 
 // Třída hráče
@@ -366,35 +494,32 @@ class Player {
     }
     
     update(keys, canvasWidth) {
-        // Pohyb doleva
-        if (keys['arrowleft'] || keys['a']) {
+        // Pohyb pouze šipkami
+        if (keys['arrowleft']) {
             this.x = Math.max(this.size / 2, this.x - 5);
         }
         
-        // Pohyb doprava
-        if (keys['arrowright'] || keys['d']) {
+        if (keys['arrowright']) {
             this.x = Math.min(canvasWidth - this.size / 2, this.x + 5);
         }
         
-        // Pohyb nahoru
-        if (keys['arrowup'] || keys['w']) {
+        if (keys['arrowup']) {
             this.y = Math.max(this.size / 2, this.y - 5);
         }
         
-        // Pohyb dolů
-        if (keys['arrowdown'] || keys['s']) {
+        if (keys['arrowdown']) {
             this.y = Math.min(600 - this.size / 2, this.y + 5);
         }
         
-        // Změna barvy (pouze pokud není stisknuto pro pohyb)
-        if (keys['a'] && !keys['arrowleft']) {
+        // Změna barvy pouze A
+        if (keys['a']) {
             this.colorIndex = (this.colorIndex + 1) % this.colors.length;
             this.color = this.colors[this.colorIndex];
             keys['a'] = false; // Zabránění opakovanému stisknutí
         }
         
-        // Změna tvaru (pouze pokud není stisknuto pro pohyb)
-        if (keys['s'] && !keys['arrowdown']) {
+        // Změna tvaru pouze S
+        if (keys['s']) {
             this.shapeIndex = (this.shapeIndex + 1) % this.shapes.length;
             this.shape = this.shapes[this.shapeIndex];
             keys['s'] = false; // Zabránění opakovanému stisknutí
