@@ -186,33 +186,39 @@
         #mobileControls {
             display: none;
             position: fixed;
-            bottom: 20px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #00ff88;
         }
         
         #dpad {
             display: grid;
             grid-template-rows: 1fr 1fr 1fr;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 5px;
+            gap: 8px;
             margin-bottom: 20px;
+            width: 200px;
+            margin: 0 auto 20px auto;
         }
         
         .dpad-btn {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 255, 136, 0.8);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.9);
             color: #000;
             border: 2px solid #00ff88;
-            border-radius: 10px;
-            font-size: 24px;
+            border-radius: 8px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
             user-select: none;
             touch-action: manipulation;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
         }
         
         .dpad-btn:active {
@@ -232,18 +238,18 @@
         }
         
         .action-btn {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 0, 136, 0.8);
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 0, 136, 0.9);
             color: #000;
             border: 2px solid #ff0088;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             user-select: none;
             touch-action: manipulation;
-            box-shadow: 0 0 15px rgba(255, 0, 136, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 136, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -264,7 +270,7 @@
         @media (max-width: 768px) {
             #gameCanvas {
                 width: 100vw;
-                height: 60vh;
+                height: 50vh;
                 max-width: 100%;
             }
             
@@ -273,15 +279,12 @@
             }
             
             #leaderboard {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 20px auto;
-                max-width: 90%;
+                display: none; /* Skrytý na mobilu */
             }
             
             #gameContainer {
                 flex-direction: column;
+                padding-bottom: 200px; /* Místo pro ovládání */
             }
             
             #instructions {
@@ -292,19 +295,29 @@
         
         @media (max-width: 480px) {
             .dpad-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
             }
             
             .action-btn {
-                width: 70px;
-                height: 70px;
-                font-size: 16px;
+                width: 60px;
+                height: 60px;
+                font-size: 14px;
             }
             
             #gameCanvas {
-                height: 50vh;
+                height: 45vh;
+            }
+            
+            #mobileControls {
+                bottom: 5px;
+                padding: 10px;
+            }
+            
+            #dpad {
+                width: 180px;
+                gap: 6px;
             }
         }
     </style>
