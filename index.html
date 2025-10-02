@@ -76,6 +76,111 @@
         #restartBtn:hover {
             background: #00cc66;
         }
+        
+        #leaderboard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            color: #00ff88;
+            min-width: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        #leaderboard h3 {
+            margin: 0 0 10px 0;
+            text-align: center;
+            color: #ff0088;
+            text-shadow: 0 0 10px #ff0088;
+        }
+        
+        #leaderboardList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        #leaderboardList li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        #leaderboardList li:last-child {
+            border-bottom: none;
+        }
+        
+        .rank {
+            color: #ffff00;
+            font-weight: bold;
+            min-width: 30px;
+        }
+        
+        .player {
+            flex: 1;
+            margin: 0 10px;
+            color: #00ff88;
+        }
+        
+        .score {
+            color: #ff0088;
+            font-weight: bold;
+        }
+        
+        #refreshLeaderboardBtn {
+            width: 100%;
+            background: #0088ff;
+            color: #000;
+            border: none;
+            padding: 8px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        #refreshLeaderboardBtn:hover {
+            background: #0066cc;
+        }
+        
+        #nameInputContainer {
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        #playerNameInput {
+            background: #222;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-right: 10px;
+            width: 150px;
+        }
+        
+        #playerNameInput:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff88;
+        }
+        
+        #saveScoreBtn {
+            background: #ff0088;
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+        
+        #saveScoreBtn:hover {
+            background: #cc0066;
+        }
     </style>
 </head>
 <body>
@@ -91,7 +196,17 @@
         <div id="gameOver">
             <h2>GAME OVER</h2>
             <div id="finalScore">Skóre: 0</div>
+            <div id="nameInputContainer" style="display: none;">
+                <input type="text" id="playerNameInput" placeholder="Zadejte své jméno" maxlength="20">
+                <button id="saveScoreBtn">Uložit skóre</button>
+            </div>
             <button id="restartBtn">Znovu hrát</button>
+        </div>
+        
+        <div id="leaderboard">
+            <h3>Žebříček</h3>
+            <ul id="leaderboardList"></ul>
+            <button id="refreshLeaderboardBtn">Obnovit</button>
         </div>
     </div>
     

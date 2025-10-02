@@ -32,9 +32,18 @@
 
 ## 🚀 Spuštění
 
+### Lokální spuštění
 1. Otevřete `index.html` v webovém prohlížeči
 2. Stiskněte **SPACE** pro začátek hry
 3. Užívejte si hraní!
+
+### Deployment na Vercel
+1. Pushněte kód na GitHub
+2. Připojte repository k Vercel
+3. Nastavte environment variables v Vercel dashboard:
+   - `JSONBIN_API_KEY` = váš JSONBin.io API klíč
+   - `JSONBIN_BIN_ID` = váš JSONBin.io Bin ID
+4. Deployujte a užívejte si online verzi!
 
 ## 🛠️ Technologie
 

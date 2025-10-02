@@ -13,6 +13,11 @@ class Game {
         this.score = 0;
         this.speed = 2;
         
+        // JSONBin.io API - bude nastaveno z environment variables v Vercel
+        this.apiKey = process.env.JSONBIN_API_KEY || 'demo-key';
+        this.binId = process.env.JSONBIN_BIN_ID || 'demo-bin-id';
+        this.leaderboard = [];
+        
         // Hráč
         this.player = new Player(this.width / 2, this.height - 100);
         
@@ -26,6 +31,7 @@ class Game {
         this.keys = {};
         
         this.init();
+        this.loadLeaderboard();
     }
     
     init() {
@@ -53,6 +59,31 @@ class Game {
         // Restart tlačítko
         document.getElementById('restartBtn').addEventListener('click', () => {
             this.startGame();
+        });
+        
+        // Uložení skóre
+        document.getElementById('saveScoreBtn').addEventListener('click', () => {
+            const playerName = document.getElementById('playerNameInput').value.trim();
+            if (playerName) {
+                this.saveScore(playerName, this.score);
+                this.hideNameInput();
+            }
+        });
+        
+        // Obnovení žebříčku
+        document.getElementById('refreshLeaderboardBtn').addEventListener('click', () => {
+            this.loadLeaderboard();
+        });
+        
+        // Enter pro uložení skóre
+        document.getElementById('playerNameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const playerName = document.getElementById('playerNameInput').value.trim();
+                if (playerName) {
+                    this.saveScore(playerName, this.score);
+                    this.hideNameInput();
+                }
+            }
         });
     }
     
@@ -146,6 +177,9 @@ class Game {
         this.gameState = 'gameOver';
         document.getElementById('finalScore').textContent = `Skóre: ${this.score}`;
         document.getElementById('gameOver').style.display = 'block';
+        
+        // Zobrazit formulář pro zadání jména
+        this.showNameInput();
     }
     
     updateUI() {
@@ -185,6 +219,100 @@ class Game {
         
         this.ctx.font = '18px Courier New';
         this.ctx.fillText('WASD nebo šipky = pohyb | A = barva | S = tvar', this.width / 2, this.height / 2 + 60);
+    }
+    
+    // JSONBin.io API funkce
+    async loadLeaderboard() {
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${this.binId}`, {
+                method: 'GET',
+                headers: {
+                    'X-Master-Key': this.apiKey
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.leaderboard = data.record.leaderboard || [];
+                this.updateLeaderboardDisplay();
+            }
+        } catch (error) {
+            console.error('Chyba při načítání žebříčku:', error);
+        }
+    }
+    
+    async saveScore(playerName, score) {
+        try {
+            // Přidej nové skóre
+            const newScore = {
+                player: playerName,
+                score: score,
+                date: new Date().toISOString()
+            };
+            
+            this.leaderboard.push(newScore);
+            
+            // Seřaď podle skóre sestupně
+            this.leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Zachovej pouze top 10
+            this.leaderboard = this.leaderboard.slice(0, 10);
+            
+            // Ulož na JSONBin.io
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${this.binId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': this.apiKey
+                },
+                body: JSON.stringify({ leaderboard: this.leaderboard })
+            });
+            
+            if (response.ok) {
+                this.updateLeaderboardDisplay();
+                console.log('Skóre uloženo!');
+            }
+        } catch (error) {
+            console.error('Chyba při ukládání skóre:', error);
+        }
+    }
+    
+    showNameInput() {
+        const nameInput = document.getElementById('playerNameInput');
+        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        
+        if (nameInput && saveScoreBtn) {
+            nameInput.style.display = 'block';
+            saveScoreBtn.style.display = 'block';
+            nameInput.focus();
+        }
+    }
+    
+    hideNameInput() {
+        const nameInput = document.getElementById('playerNameInput');
+        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        
+        if (nameInput && saveScoreBtn) {
+            nameInput.style.display = 'none';
+            saveScoreBtn.style.display = 'none';
+        }
+    }
+    
+    updateLeaderboardDisplay() {
+        const leaderboardList = document.getElementById('leaderboardList');
+        if (leaderboardList) {
+            leaderboardList.innerHTML = '';
+            
+            this.leaderboard.forEach((entry, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="rank">${index + 1}.</span>
+                    <span class="player">${entry.player}</span>
+                    <span class="score">${entry.score}</span>
+                `;
+                leaderboardList.appendChild(li);
+            });
+        }
     }
 }
 
