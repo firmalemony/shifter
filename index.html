@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shifter - Arkádová hra</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+        }
+        
+        #gameContainer {
+            text-align: center;
+        }
+        
+        #gameCanvas {
+            border: 2px solid #00ff88;
+            background: #111;
+            box-shadow: 0 0 20px #00ff88;
+        }
+        
+        #ui {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+        #score {
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+        
+        #currentShape {
+            color: #ff0088;
+            text-shadow: 0 0 10px #ff0088;
+            margin-top: 5px;
+        }
+        
+        #instructions {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border: 2px solid #ff0088;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        #restartBtn {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        #restartBtn:hover {
+            background: #00cc66;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="ui">
+            <div id="score">Skóre: 0</div>
+            <div id="currentShape">Padající tvary: 0</div>
+            <div id="instructions">
+                WASD nebo šipky = pohyb | A = barva | S = tvar | Sbírej tvary! | SPACE = start/restart
+            </div>
+        </div>
+        <div id="gameOver">
+            <h2>GAME OVER</h2>
+            <div id="finalScore">Skóre: 0</div>
+            <button id="restartBtn">Znovu hrát</button>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
