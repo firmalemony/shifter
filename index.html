@@ -181,6 +181,132 @@
         #saveScoreBtn:hover {
             background: #cc0066;
         }
+        
+        /* Mobilní ovládání */
+        #mobileControls {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        
+        #dpad {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .dpad-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 255, 136, 0.8);
+            color: #000;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+        
+        .dpad-btn:active {
+            background: rgba(0, 255, 136, 1);
+            transform: scale(0.95);
+        }
+        
+        .dpad-center {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        #actionButtons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 0, 136, 0.8);
+            color: #000;
+            border: 2px solid #ff0088;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+            box-shadow: 0 0 15px rgba(255, 0, 136, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:active {
+            background: rgba(255, 0, 136, 1);
+            transform: scale(0.95);
+        }
+        
+        .action-btn small {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        /* Responzivní design */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                width: 100vw;
+                height: 60vh;
+                max-width: 100%;
+            }
+            
+            #mobileControls {
+                display: block;
+            }
+            
+            #leaderboard {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 20px auto;
+                max-width: 90%;
+            }
+            
+            #gameContainer {
+                flex-direction: column;
+            }
+            
+            #instructions {
+                font-size: 12px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dpad-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .action-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 16px;
+            }
+            
+            #gameCanvas {
+                height: 50vh;
+            }
+        }
     </style>
 </head>
 <body>
@@ -190,7 +316,7 @@
             <div id="score">Skóre: 0</div>
             <div id="currentShape">Padající tvary: 0</div>
             <div id="instructions">
-                WASD nebo šipky = pohyb | A = barva | S = tvar | Sbírej tvary! | SPACE = start/restart
+                Šipky = pohyb | A = barva | S = tvar | Sbírej tvary! | SPACE = start/restart
             </div>
         </div>
         <div id="gameOver">
@@ -207,6 +333,24 @@
             <h3>Žebříček</h3>
             <ul id="leaderboardList"></ul>
             <button id="refreshLeaderboardBtn">Obnovit</button>
+        </div>
+        
+        <!-- Mobilní ovládání -->
+        <div id="mobileControls">
+            <div id="dpad">
+                <button id="upBtn" class="dpad-btn">↑</button>
+                <div class="dpad-row">
+                    <button id="leftBtn" class="dpad-btn">←</button>
+                    <div class="dpad-center"></div>
+                    <button id="rightBtn" class="dpad-btn">→</button>
+                </div>
+                <button id="downBtn" class="dpad-btn">↓</button>
+            </div>
+            
+            <div id="actionButtons">
+                <button id="colorBtn" class="action-btn">A<br><small>Barva</small></button>
+                <button id="shapeBtn" class="action-btn">S<br><small>Tvar</small></button>
+            </div>
         </div>
     </div>
     
