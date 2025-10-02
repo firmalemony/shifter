@@ -316,23 +316,22 @@ class Game {
     }
     
     showNameInput() {
-        const nameInput = document.getElementById('playerNameInput');
-        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        const nameInputContainer = document.getElementById('nameInputContainer');
         
-        if (nameInput && saveScoreBtn) {
-            nameInput.style.display = 'block';
-            saveScoreBtn.style.display = 'block';
-            nameInput.focus();
+        if (nameInputContainer) {
+            nameInputContainer.style.display = 'block';
+            const nameInput = document.getElementById('playerNameInput');
+            if (nameInput) {
+                nameInput.focus();
+            }
         }
     }
     
     hideNameInput() {
-        const nameInput = document.getElementById('playerNameInput');
-        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        const nameInputContainer = document.getElementById('nameInputContainer');
         
-        if (nameInput && saveScoreBtn) {
-            nameInput.style.display = 'none';
-            saveScoreBtn.style.display = 'none';
+        if (nameInputContainer) {
+            nameInputContainer.style.display = 'none';
         }
     }
     
