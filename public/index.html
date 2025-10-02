@@ -206,6 +206,27 @@
             margin: 0 auto 20px auto;
         }
         
+        /* Správné umístění šipek */
+        #upBtn {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        #leftBtn {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        #rightBtn {
+            grid-column: 3;
+            grid-row: 2;
+        }
+        
+        #downBtn {
+            grid-column: 2;
+            grid-row: 3;
+        }
+        
         .dpad-btn {
             width: 50px;
             height: 50px;
@@ -268,14 +289,31 @@
         
         /* Responzivní design */
         @media (max-width: 768px) {
+            body {
+                padding: 0;
+                margin: 0;
+                overflow-x: hidden;
+            }
+            
             #gameCanvas {
                 width: 100vw;
-                height: 50vh;
+                height: 40vh;
                 max-width: 100%;
+                margin-bottom: 20px;
             }
             
             #mobileControls {
                 display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                transform: none;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
             }
             
             #leaderboard {
@@ -284,12 +322,14 @@
             
             #gameContainer {
                 flex-direction: column;
-                padding-bottom: 200px; /* Místo pro ovládání */
+                padding-bottom: 180px; /* Místo pro ovládání */
+                min-height: 100vh;
             }
             
             #instructions {
                 font-size: 12px;
                 text-align: center;
+                margin-bottom: 10px;
             }
         }
         
@@ -307,17 +347,20 @@
             }
             
             #gameCanvas {
-                height: 45vh;
+                height: 35vh;
             }
             
             #mobileControls {
-                bottom: 5px;
                 padding: 10px;
             }
             
             #dpad {
                 width: 180px;
                 gap: 6px;
+            }
+            
+            #gameContainer {
+                padding-bottom: 160px;
             }
         }
     </style>
