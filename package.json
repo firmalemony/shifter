@@ -4,7 +4,7 @@
   "description": "Shifter - Arkádová hra s žebříčkem",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'Static build - no build step needed'",
+    "build": "mkdir -p public && cp *.html *.js public/",
     "start": "echo 'Static files - serve index.html'"
   },
   "keywords": ["game", "arcade", "javascript", "canvas"],
