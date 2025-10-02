@@ -13,9 +13,9 @@ class Game {
         this.score = 0;
         this.speed = 2;
         
-        // JSONBin.io API - skutečné klíče pro fungující žebříček
-        this.apiKey = '$2a$10$WrMBljUhANFS39i2XwHfH.9.V8AkViUkOp81Bn51ouKwvbmzG2M7m';
-        this.binId = '68de3f24ae596e708f0352a3';
+        // JSONBin.io API - pro Vercel použij environment variables, pro localhost skutečné klíče
+        this.apiKey = process.env.JSONBIN_API_KEY || '$2a$10$WrMBljUhANFS39i2XwHfH.9.V8AkViUkOp81Bn51ouKwvbmzG2M7m';
+        this.binId = process.env.JSONBIN_BIN_ID || '68de3f24ae596e708f0352a3';
         this.leaderboard = [];
         
         // Hráč
