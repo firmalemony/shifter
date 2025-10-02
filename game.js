@@ -13,9 +13,9 @@ class Game {
         this.score = 0;
         this.speed = 2;
         
-        // JSONBin.io API - bude nastaveno z environment variables v Vercel
-        this.apiKey = process.env.JSONBIN_API_KEY || 'demo-key';
-        this.binId = process.env.JSONBIN_BIN_ID || 'demo-bin-id';
+        // JSONBin.io API - pro localhost použijte demo hodnoty, pro Vercel environment variables
+        this.apiKey = 'demo-key'; // Pro localhost - nahraďte skutečným klíčem pro testování
+        this.binId = 'demo-bin-id'; // Pro localhost - nahraďte skutečným Bin ID pro testování
         this.leaderboard = [];
         
         // Hráč
@@ -223,6 +223,18 @@ class Game {
     
     // JSONBin.io API funkce
     async loadLeaderboard() {
+        // Pro localhost s demo hodnotami - přeskočit načítání
+        if (this.apiKey === 'demo-key' || this.binId === 'demo-bin-id') {
+            console.log('Demo režim - žebříček není dostupný');
+            this.leaderboard = [
+                { player: 'Demo Hráč 1', score: 150, date: new Date().toISOString() },
+                { player: 'Demo Hráč 2', score: 120, date: new Date().toISOString() },
+                { player: 'Demo Hráč 3', score: 100, date: new Date().toISOString() }
+            ];
+            this.updateLeaderboardDisplay();
+            return;
+        }
+        
         try {
             const response = await fetch(`https://api.jsonbin.io/v3/b/${this.binId}`, {
                 method: 'GET',
@@ -238,10 +250,33 @@ class Game {
             }
         } catch (error) {
             console.error('Chyba při načítání žebříčku:', error);
+            // Fallback demo data
+            this.leaderboard = [
+                { player: 'Demo Hráč 1', score: 150, date: new Date().toISOString() },
+                { player: 'Demo Hráč 2', score: 120, date: new Date().toISOString() },
+                { player: 'Demo Hráč 3', score: 100, date: new Date().toISOString() }
+            ];
+            this.updateLeaderboardDisplay();
         }
     }
     
     async saveScore(playerName, score) {
+        // Pro localhost s demo hodnotami - pouze lokální uložení
+        if (this.apiKey === 'demo-key' || this.binId === 'demo-bin-id') {
+            const newScore = {
+                player: playerName,
+                score: score,
+                date: new Date().toISOString()
+            };
+            
+            this.leaderboard.push(newScore);
+            this.leaderboard.sort((a, b) => b.score - a.score);
+            this.leaderboard = this.leaderboard.slice(0, 10);
+            this.updateLeaderboardDisplay();
+            console.log('Skóre uloženo lokálně (demo režim)');
+            return;
+        }
+        
         try {
             // Přidej nové skóre
             const newScore = {
