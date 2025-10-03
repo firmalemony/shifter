@@ -197,34 +197,28 @@
         }
         
         #dpad {
-            display: grid;
-            grid-template-rows: 1fr 1fr 1fr;
-            grid-template-columns: 1fr 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
             margin-bottom: 20px;
             width: 200px;
             margin: 0 auto 20px auto;
         }
         
-        /* Správné umístění šipek */
-        #upBtn {
-            grid-column: 2;
-            grid-row: 1;
+        .dpad-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
         }
         
-        #leftBtn {
-            grid-column: 1;
-            grid-row: 2;
+        .dpad-empty {
+            width: 50px;
+            height: 50px;
         }
         
-        #rightBtn {
-            grid-column: 3;
-            grid-row: 2;
-        }
-        
-        #downBtn {
-            grid-column: 2;
-            grid-row: 3;
+        .dpad-center {
+            width: 50px;
+            height: 50px;
         }
         
         .dpad-btn {
@@ -406,13 +400,21 @@
         <!-- Mobilní ovládání -->
         <div id="mobileControls">
             <div id="dpad">
-                <button id="upBtn" class="dpad-btn">↑</button>
+                <div class="dpad-row">
+                    <div class="dpad-empty"></div>
+                    <button id="upBtn" class="dpad-btn">↑</button>
+                    <div class="dpad-empty"></div>
+                </div>
                 <div class="dpad-row">
                     <button id="leftBtn" class="dpad-btn">←</button>
                     <div class="dpad-center"></div>
                     <button id="rightBtn" class="dpad-btn">→</button>
                 </div>
-                <button id="downBtn" class="dpad-btn">↓</button>
+                <div class="dpad-row">
+                    <div class="dpad-empty"></div>
+                    <button id="downBtn" class="dpad-btn">↓</button>
+                    <div class="dpad-empty"></div>
+                </div>
             </div>
             
             <div id="actionButtons">
