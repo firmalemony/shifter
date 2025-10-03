@@ -23,9 +23,10 @@ class Game {
         
         // Padající tvary
         this.collectibles = [];
-        this.shapeSpeed = 0.5; // Velmi pomalé padání
+        this.shapeSpeed = 0.5; // Rychlost zůstává stejná
         this.shapeSpawnTimer = 0;
         this.shapeSpawnInterval = 200; // frames - delší interval mezi tvary
+        this.maxConcurrentObjects = 1; // Počáteční počet současných objektů
         
         // Ovládání
         this.keys = {};
@@ -88,6 +89,21 @@ class Game {
         
         // Mobilní ovládání
         this.setupMobileControls();
+        
+        // Start tlačítko pro mobil
+        document.getElementById('startBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (this.gameState === 'menu' || this.gameState === 'gameOver') {
+                this.startGame();
+            }
+        });
+        
+        document.getElementById('startBtn').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (this.gameState === 'menu' || this.gameState === 'gameOver') {
+                this.startGame();
+            }
+        });
     }
     
     startGame() {
@@ -113,9 +129,9 @@ class Game {
         // Aktualizace hráče s pohybem
         this.player.update(this.keys, this.width);
         
-        // Spawn nových tvarů
+        // Spawn nových tvarů - pouze pokud máme méně než maximum
         this.shapeSpawnTimer++;
-        if (this.shapeSpawnTimer >= this.shapeSpawnInterval) {
+        if (this.shapeSpawnTimer >= this.shapeSpawnInterval && this.collectibles.length < this.maxConcurrentObjects) {
             this.spawnShape();
             this.shapeSpawnTimer = 0;
         }
@@ -139,10 +155,10 @@ class Game {
             }
         }
         
-        // Zvyšování obtížnosti - velmi pomalé zrychlování
-        if (this.score > 0 && this.score % 5 === 0) {
-            this.shapeSpeed = Math.min(this.shapeSpeed + 0.02, 1.5);
-            this.shapeSpawnInterval = Math.max(this.shapeSpawnInterval - 1, 150);
+        // Zvyšování obtížnosti - pouze přidávání objektů, rychlost zůstává stejná
+        if (this.score > 0 && this.score % 10 === 0) {
+            // Zvyšujeme pouze počet současných objektů, ne rychlost
+            this.maxConcurrentObjects = Math.min(this.maxConcurrentObjects + 1, 8);
         }
     }
     

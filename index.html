@@ -287,6 +287,18 @@
             margin-top: 2px;
         }
         
+        .start-btn {
+            background: rgba(0, 255, 0, 0.9) !important;
+            border-color: #00ff00 !important;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.6) !important;
+            font-size: 18px !important;
+            font-weight: bold !important;
+        }
+        
+        .start-btn:active {
+            background: rgba(0, 255, 0, 1) !important;
+        }
+        
         /* Responzivní design */
         @media (max-width: 768px) {
             body {
@@ -297,9 +309,9 @@
             
             #gameCanvas {
                 width: 100vw;
-                height: 40vh;
+                height: 30vh;
                 max-width: 100%;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
             
             #mobileControls {
@@ -322,7 +334,7 @@
             
             #gameContainer {
                 flex-direction: column;
-                padding-bottom: 180px; /* Místo pro ovládání */
+                padding-bottom: 140px; /* Místo pro ovládání */
                 min-height: 100vh;
             }
             
@@ -347,7 +359,7 @@
             }
             
             #gameCanvas {
-                height: 35vh;
+                height: 25vh;
             }
             
             #mobileControls {
@@ -360,7 +372,7 @@
             }
             
             #gameContainer {
-                padding-bottom: 160px;
+                padding-bottom: 120px;
             }
         }
     </style>
@@ -404,6 +416,7 @@
             </div>
             
             <div id="actionButtons">
+                <button id="startBtn" class="action-btn start-btn">START</button>
                 <button id="colorBtn" class="action-btn">A<br><small>Barva</small></button>
                 <button id="shapeBtn" class="action-btn">S<br><small>Tvar</small></button>
             </div>
